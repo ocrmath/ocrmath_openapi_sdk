@@ -45,7 +45,7 @@ public class image {
         try {
             appSign = HashTools.getAppSign(APP_KEY, APP_SECRET, timeMillis);
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("密钥生成失败" + e.getMessage());
+            throw new RuntimeException(e);
         }
 
         // 将应用密钥、签名、时间戳等参数放入 JSON 对象中
@@ -78,30 +78,31 @@ public class image {
 
         // 发送请求并处理响应
         try (Response response = client.newCall(request).execute()) {
-            int statusCode = response.code();
+
             // 检查响应是否成功
-            if (response.isSuccessful()) {
-                // 确保响应体不为空
-                if (response.body() != null) {
-                    // 解析响应 JSON 数据
-                    JSONObject result = JSON.parseObject(response.body().string());
-                    Integer errno = result.getInteger("errno");
-                    // 根据 errno 判断请求是否成功
-                    if (0 == errno) {
-                        // 提取并打印任务 ID
-                        JSONObject data = result.getJSONObject("data");
-                        String taskId = data.getString("task_id");
-                        System.out.println("任务id：" + taskId);
-                    } else {
-                        // 打印错误码和错误信息
-                        System.out.println(errno);
-                        String msg = result.getString("msg");
-                        System.out.println(msg);
-                    }
-                }
+            if (!response.isSuccessful()) {
+                System.out.println("响应失败");
+                return;
+            }
+            // 确保响应体不为空
+            if (response.body() == null) {
+                return;
+            }
+            // 解析响应 JSON 数据
+            JSONObject result = JSON.parseObject(response.body().string());
+            Integer errno = result.getInteger("errno");
+            // 根据 errno 判断请求是否成功
+            if (0 == errno) {
+                // 提取并打印任务 ID
+                JSONObject data = result.getJSONObject("data");
+                String taskId = data.getString("task_id");
+                System.out.println("任务id：" + taskId);
             } else {
-                // 打印请求失败的状态码
-                System.out.println("请求失败，状态码: " + statusCode);
+                // 打印错误码和错误信息
+                System.out.println(errno);
+                String msg = result.getString("msg");
+                System.out.println(msg);
+                // 进一步处理
             }
         } catch (IOException e) {
             // 捕获 IO 异常并打印错误信息
