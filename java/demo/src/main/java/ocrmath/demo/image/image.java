@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import ocrmath.demo.util.HashTools;
 import okhttp3.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -48,11 +49,11 @@ public class image {
         }
 
         // 将应用密钥、签名、时间戳等参数放入 JSON 对象中
-        json.put("app_key",APP_KEY);
-        json.put("sign",appSign);
-        json.put("timestamp",timeMillis);
-        json.put("callback_open",1);
-        json.put("call_back_url","http://xxx/xxx");
+        json.put("app_key", APP_KEY);
+        json.put("sign", appSign);
+        json.put("timestamp", timeMillis);
+        json.put("callback_open", 1);
+        json.put("call_back_url", "http://xxx/xxx");
         // 可选择使用文件URL代替本地文件，但两者不能同时使用
         //json.put("file_url","https://web.ocrmath.com/uploads/ocrmath/png/2024-11-22/39b83cab9fcce4c13c0ee024da4860ed.png");
 
@@ -81,17 +82,17 @@ public class image {
             // 检查响应是否成功
             if (response.isSuccessful()) {
                 // 确保响应体不为空
-                if (response.body() != null){
+                if (response.body() != null) {
                     // 解析响应 JSON 数据
                     JSONObject result = JSON.parseObject(response.body().string());
                     Integer errno = result.getInteger("errno");
                     // 根据 errno 判断请求是否成功
-                    if (0 == errno){
+                    if (0 == errno) {
                         // 提取并打印任务 ID
                         JSONObject data = result.getJSONObject("data");
                         String taskId = data.getString("task_id");
                         System.out.println("任务id：" + taskId);
-                    }else {
+                    } else {
                         // 打印错误码和错误信息
                         System.out.println(errno);
                         String msg = result.getString("msg");
