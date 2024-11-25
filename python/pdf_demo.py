@@ -4,11 +4,11 @@ import requests
 import json
 
 # app_key 和 app_secret，从 https://web.ocrmath.com/OpenApi 的开放接口页面获取
-APP_KEY = "6e11b5278d0eae62822bc271009a8260"
-APP_SECRET = "a417531e5e132c7117efab58ab899ddf"
+APP_KEY = "xxx"
+APP_SECRET = "xxx"
 
 # image 识别接口
-URL = "http://192.168.31.71/v1/pdf"
+URL = "https://web.ocrmath.com/v1/pdf"
 
 def get_app_sign(app_key, app_secret, timestamp):
     """
