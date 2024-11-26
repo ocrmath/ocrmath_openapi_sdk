@@ -7,8 +7,8 @@ import json
 APP_KEY = "xxx"
 APP_SECRET = "xxx"
 
-# image 识别接口
-URL = "https://web.ocrmath.com/v1/text"
+# image 识别接口 若您进行 pdf 识别，则需切换为 pdf API https://openapi.ocrmath.com/v1/pdf
+URL = "https://openapi.ocrmath.com/v1/text"
 
 def get_app_sign(app_key, app_secret, timestamp):
     """
@@ -37,7 +37,7 @@ def main():
         return
 
     # 本地文件路径,请替换成您的图片真实位置
-    file_path = "/image/python/ces.jpg"
+    file_path = "/home/python/ces.jpg"
 
     # 构建 JSON 参数
     options_json = {
@@ -45,9 +45,11 @@ def main():
         "sign": app_sign,
         "timestamp": timestamp,
         "callback_open": 1,
-        "call_back_url": "http://xxx/xxx"
-        # 如果使用 URL 文件，可启用以下行
-        # "file_url": "https://web.ocrmath.com/uploads/ocrmath/png/2024-11-22/39b83cab9fcce4c13c0ee024da4860ed.png"
+        "call_back_url": "http://xxx/xxx" # 请替换成您的 回调地址
+        # "start_page":1, 若您进行 pdf ocr 则需传递此参数
+        # "end_page":2, 若您进行 pdf ocr 则需传递此参数
+        # 如果使用 URL 文件，可启用以下行,替换成您的 pdf 链接
+        # "file_url": "https://web.ocrmath.com/uploads/ocrmath/pdf/2024-11-22/39b83cab9fcce4c13c0ee024da4860ed.pdf" 
     }
 
     # 构建请求的多部分数据
