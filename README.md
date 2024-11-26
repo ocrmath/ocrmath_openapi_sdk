@@ -215,7 +215,7 @@ https://www.ocrmath.com/ocrmath/notify
 ```
 
 | 字段    | 说明       | 必选 | 类型 |
-| ------- | ---------- | | |
+| ------- | ---------- | ---------- | ---------- |
 | task_id | 任务 id    | 是 | string |
 | latex   | 识别的结果 |是|string|
 
