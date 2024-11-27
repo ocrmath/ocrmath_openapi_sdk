@@ -209,6 +209,7 @@ https://www.ocrmath.com/ocrmath/notify
 
 ```json
 {
+    "task_id":"048792aa64d5adfefc71545e70efb759",
     "total_latex": "$x-1$\\n$x=2$",
     "detail_list": [
         {
@@ -225,6 +226,7 @@ https://www.ocrmath.com/ocrmath/notify
 
 | 字段        | 说明                                                        | 必选 | 类型   |
 | ----------- | ----------------------------------------------------------- | ---- | ------ |
+| task_id     | 任务id                                                      | 是   | string |
 | total_latex | 识别结果                                                    | 是   | string |
 | detail_list | pdf 识别详情列表，当开发者调用 /v1/pdf 接口时需要关心此字段 | 是   | array  |
 
@@ -311,6 +313,7 @@ https://openapi.ocrmath.com/v1/task_result
     "errno": 0,
     "msg": "success",
     "data": {
+        "task_id":"048792aa64d5adfefc71545e70efb759",
         "task_status": 1,
         "total_latex": "$x-1$",
         "detail_list": [
@@ -339,6 +342,7 @@ https://openapi.ocrmath.com/v1/task_result
 
 | 字段        | 说明                                                         | 必选 | 类型    |
 | ----------- | ------------------------------------------------------------ | ---- | ------- |
+| task_id     | 任务 id                                                      | 是   | string  |
 | task_status | 任务处理状态<br />0：未处理、<br />1：处理中<br />2：处理完毕 | 是   | integer |
 | total_latex | 识别结果                                                     | 是   | string  |
 | detail_list | pdf 识别详情列表，当开发者调用 /v1/pdf 接口时需要关心此字段  | 是   | array   |
