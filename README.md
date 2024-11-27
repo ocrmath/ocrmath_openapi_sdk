@@ -209,17 +209,33 @@ https://www.ocrmath.com/ocrmath/notify
 
 ```json
 {
-    "task_id": "c57e32b3018842d3b913eccc8a431f5c",
-    "latex": "AMERICAN MATHEMATICAL"
+    "total_latex": "$x-1$\\n$x=2$",
+    "detail_list": [
+        {
+            "pdf_page_num": 1,
+            "latex": "$x=1$"
+        },
+        {
+            "pdf_page_num": 1,
+            "latex": "$x=2$"
+        }
+    ]
 }
 ```
 
-| 字段    | 说明       | 必选 | 类型 |
-| ------- | ---------- | ---------- | ---------- |
-| task_id | 任务 id    | 是 | string |
-| latex   | 识别的结果 |是|string|
+| 字段        | 说明                                                        | 必选 | 类型   |
+| ----------- | ----------------------------------------------------------- | ---- | ------ |
+| total_latex | 识别结果                                                    | 是   | string |
+| detail_list | pdf 识别详情列表，当开发者调用 /v1/pdf 接口时需要关心此字段 | 是   | array  |
 
+**detail_list 详解**
 
+若客户端调用的 API 是： `/v1/text`，则无需关心此字段，若客户端调用的 API 是 `/v1/pdf`  detail_list 为 pdf 识别的详情信息。
+
+| 字段         | 说明                                                         | 必选 | 类型    |
+| ------------ | ------------------------------------------------------------ | ---- | ------- |
+| latex        | 此页对应的识别结果                                           | 是   | string  |
+| pdf_page_num | 页码，<font color="#B22222">注意：</font>此页码表示的是在 pdf 的第几页。 | 是   | integer |
 
 ## 4.4 通知应答
 
