@@ -191,11 +191,15 @@ https://openapi.ocrmath.com/v1/pdf
 
 ## 4.1 接口规范
 
-开发者需提供一个 HTTP 请求，方式 【POST】的回调 URL，该 URL 是通过客户端调用`/v1/text`或者`/v1/pdf`识别接口时传递的表单参数： `options_json` 中的 `callback_url` 设置，要求回调 URL 必须是外部可正常访问的，且不携带任何后缀参数，否则客户端可能无法收到超级公式的回调通知信息。回调 URL 示例：
+开发者需提供一个 【POST】方式的 HTTP  的回调 URL，要求回调 URL 必须是外部可正常访问的，且不携带任何后缀参数，否则客户端可能无法收到超级公式的回调通知信息。回调 URL 示例：
 
 ```json
 https://www.ocrmath.com/ocrmath/notify
 ```
+
+URL 如何填写？
+
+请您登录我们的系统 <https://web.ocrmath.com> ，点击系统左侧的导航栏 **开放接口**，然后选择您要使用的应用，点击 **查看 APP_KEY** 在 回调地址栏里面填写您的回调地址。 
 
 ## 4.2 通知报文
 
