@@ -37,8 +37,7 @@ https://openapi.ocrmath.com/v1/text
     "app_key": "6e11a5278d0eae62822bc274009a8261",
     "sign": "f6eaa67d061e5799985d1faf3a0d7262",
     "timestamp": 1731992850234,
-    "callback_open": 1,
-    "callback_url": "https://www.ocrmath.com/ocrmath/notify"
+    "callback_open": 1
 }
 ```
 
@@ -50,7 +49,6 @@ https://openapi.ocrmath.com/v1/text
 | timestamp | 当前时间戳，精确到毫秒 | 是 | string |
 | sign | 将以下三个字段按顺序拼接后做 md5 摘要（要求 32 位、小写）：<br />app_key + app_secrect + timestamp |是|string|
 | callback_open | 是否开启回调，取值： 0 不开启 ，1开启，当您未传递此参数，则默认不开启回调。 |否|integer|
-| callback_url | 回调地址，公网可访问的 POST 请求地址<br />该接口用于客户端接收超级公式的回调信息，详情请查看 `结果通知`<br />当您未传递此参数，则默认不开启回调。 |否|string|
 | file_url | 图片文件链接，此链接必须是公网可访问。<br />(当通过上传方式传递图片时此参数无需传递)此参数和 2.2 中的 file 参数 二选一，换句话说，我们提供了两种上传图片的方式供您选择。 |否|string|
 
 
@@ -124,7 +122,6 @@ https://openapi.ocrmath.com/v1/pdf
     "sign": "f6eaa67d061e5799985desd33a0d7262",
     "timestamp": 1731992850234,
     "callback_open": 1,
-    "callback_url": "https://www.ocrmath.com/ocrmath/notify",
     "start_page": 1,
     "end_page": 1
 }
@@ -138,7 +135,6 @@ https://openapi.ocrmath.com/v1/pdf
 | timestamp     | 当前时间戳，精确到毫秒                                       | 是 | string  |
 | sign          | 将以下三个字段按顺序拼接后做 md5 摘要（要求 32 位、小写）：<br />app_key + app_secrect + timestamp | 是 | string  |
 | callback_open | 是否开启回调，取值： 0 不开启 ，1开启，当您未传递此参数，则默认不开启回调。 | 否                          | integer |
-| callback_url  | 回调地址，公网可访问的 POST 请求地址<br />该接口用于客户端接收超级公式的回调信息，详情请查看 `结果通知`<br />当您未传递此参数，则默认不开启回调。 | 否                          | string  |
 | file_url      | pdf 文件链接，此链接必须是公网可访问。<br />(当通过上传方式传递 pdf 时此参数无需传递)此参数和 3.2 中的 file 参数 二选一，换句话说，我们提供了两种上传 pdf 的方式供您选择。 | 否                          | string  |
 | start_page    | 要识别的 pdf 开始页，<font color="#B22222">注意：</font>开始页是在 pdf 的第几页，不是页码 | 是 | integer |
 | end_page      | 要识别的 pdf 结束页，<font color='#B22222'>注意：</font>结束页是在 pdf 的第几页，不是页码 | 是 | integer |
@@ -184,7 +180,7 @@ https://openapi.ocrmath.com/v1/pdf
 
 # 4 结果通知
 
-当客户端调用接口 `/v1/text` 或 `/v1/pdf` 将表单数据 `options_json` 中的 `callback_open` 参数设置为 1， 设置了`callback_url`，超级公式则通过您填写的`callback_url`将 图片 或 pdf 识别结果返回给开发者。
+当客户端调用接口 `/v1/text` 或 `/v1/pdf` 将表单数据 `options_json` 中的 `callback_open` 参数设置为 1，并且您在后台设置了回调地址，超级公式则通过您填写的回调地址将图片或 pdf 识别结果返回给您。
 
 >**注意**
 >
@@ -209,35 +205,17 @@ https://www.ocrmath.com/ocrmath/notify
 
 ```json
 {
-    "task_id":"048792aa64d5adfefc71545e70efb759",
-    "total_latex": "$x-1$\\n$x=2$",
-    "detail_list": [
-        {
-            "pdf_page_num": 1,
-            "latex": "$x=1$"
-        },
-        {
-            "pdf_page_num": 1,
-            "latex": "$x=2$"
-        }
-    ]
+    "task_id": "c57e32b3018842d3b913eccc8a431f5c",
+    "latex": "AMERICAN MATHEMATICAL"
 }
 ```
 
-| 字段        | 说明                                                        | 必选 | 类型   |
-| ----------- | ----------------------------------------------------------- | ---- | ------ |
-| task_id     | 任务id                                                      | 是   | string |
-| total_latex | 识别结果                                                    | 是   | string |
-| detail_list | pdf 识别详情列表，当开发者调用 /v1/pdf 接口时需要关心此字段 | 是   | array  |
+| 字段    | 说明       | 必选 | 类型 |
+| ------- | ---------- | ---------- | ---------- |
+| task_id | 任务 id    | 是 | string |
+| latex   | 识别的结果 |是|string|
 
-**detail_list 详解**
 
-若客户端调用的 API 是： `/v1/text`，则无需关心此字段，若客户端调用的 API 是 `/v1/pdf`  detail_list 为 pdf 识别的详情信息。
-
-| 字段         | 说明                                                         | 必选 | 类型    |
-| ------------ | ------------------------------------------------------------ | ---- | ------- |
-| latex        | 此页对应的识别结果                                           | 是   | string  |
-| pdf_page_num | 页码，<font color="#B22222">注意：</font>此页码表示的是在 pdf 的第几页。 | 是   | integer |
 
 ## 4.4 通知应答
 
@@ -313,7 +291,6 @@ https://openapi.ocrmath.com/v1/task_result
     "errno": 0,
     "msg": "success",
     "data": {
-        "task_id":"048792aa64d5adfefc71545e70efb759",
         "task_status": 1,
         "total_latex": "$x-1$",
         "detail_list": [
@@ -342,7 +319,6 @@ https://openapi.ocrmath.com/v1/task_result
 
 | 字段        | 说明                                                         | 必选 | 类型    |
 | ----------- | ------------------------------------------------------------ | ---- | ------- |
-| task_id     | 任务 id                                                      | 是   | string  |
 | task_status | 任务处理状态<br />0：未处理、<br />1：处理中<br />2：处理完毕 | 是   | integer |
 | total_latex | 识别结果                                                     | 是   | string  |
 | detail_list | pdf 识别详情列表，当开发者调用 /v1/pdf 接口时需要关心此字段  | 是   | array   |
